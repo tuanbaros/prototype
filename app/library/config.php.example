@@ -1,0 +1,9 @@
+<?php
+
+define('DOMAIN', 'http://yourdomain/');
+
+define('DNS', 'mysql:host=your_my_sql_host;dbname=your_db_name');
+
+define('USERNAME', 'your_mysql_username');
+
+define('PASSWORD', 'your_mysql_password');

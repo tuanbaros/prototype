@@ -1,0 +1,9 @@
+#Options –Indexes
+# Don't listing directory
+Options -Indexes
+ErrorDocument 403 http://localhost/prototype/
+# Follow symbolic links
+Options +FollowSymLinks
+
+# Default handler
+DirectoryIndex index.php
