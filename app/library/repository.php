@@ -29,18 +29,49 @@ class Repository
         # code...
     }
 
+    public function findByWhere($whereClause)
+    {
+        $sql = "select * from {$this->table} where {$whereClause}";
+        return $this->db->query($sql);
+    }
+
     public function insert($columns, $values)
     {
-        # code ...
+        $sql = "insert ignore into {$this->table} ({$columns}) values ({$values})";
+        $this->db->query($sql);
+        return $this->db->lastInsertId();
     }
 
-    public function update($id)
+    public function update($set, $whereClause)
     {
-        # code...
+        $sql = "update {$this->table} set {$set} where {$whereClause}";
+        $result = $this->db->query($sql);
+        return $result->rowCount();
     }
 
-    public function delete($id)
+    public function delete($whereClause)
     {
-        # code...
+        $sql = "delete from {$this->table} where {$whereClause}";
+        $result = $this->db->query($sql);
+        return $result->rowCount();
+    }
+
+    public function count($whereClause) {
+        $sql = "select count(*) from {$this->table}";
+        if (isset($whereClause)) {
+            $sql = $sql . " where {$whereClause}";
+        }
+        $req = $this->db->query($sql);
+        return $req->fetchColumn();
+    }
+
+    public function __sleep()
+    {
+        return $this->db;
+    }
+    
+    public function __wakeup()
+    {
+        $this->__construct();
     }
 }
