@@ -1,0 +1,7 @@
+.login-page .form .register-form {
+    display: block;
+}
+
+.login-page .form .login-form {
+    display: none;
+}

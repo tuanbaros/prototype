@@ -56,4 +56,20 @@ class Route
         header('Location:' . DOMAIN . 'home');
         die();
     }
+
+    public static function action($controller, $method = 'index', $data = '') {
+        $url = DOMAIN  . $controller . '/' . $method;
+        if (!empty($data)) {
+            foreach ($data as $key) {
+                $url = $url . '/' . $key;
+            }
+        }
+        return $url;
+    }
+
+    public static function redirect($url)
+    {
+        header('Location:' . DOMAIN . $url);
+        die();
+    }
 }
