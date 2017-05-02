@@ -37,9 +37,18 @@ class Repository
 
     public function insert($columns, $values)
     {
-        $sql = "insert ignore into {$this->table} ({$columns}) values ({$values})";
-        $this->db->query($sql);
+        $sql = "insert into {$this->table} ({$columns}) values ({$values}) on duplicate key update open_id=open_id";
+        var_dump($sql);
+        // $this->db->query($sql);
+        die();
         return $this->db->lastInsertId();
+    }
+
+    public function insert_duplicate($columns, $values, $duplicate, $valuesUpdate)
+    {
+        $sql = "insert into {$this->table} ({$columns}) values ({$values}) on duplicate key update {$duplicate}={$valuesUpdate}";
+        $result = $this->db->query($sql);
+        return $result->rowCount();
     }
 
     public function update($set, $whereClause)

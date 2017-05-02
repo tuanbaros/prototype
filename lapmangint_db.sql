@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 23, 2017 at 09:38 AM
+-- Generation Time: May 02, 2017 at 05:50 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.24
 
@@ -144,9 +144,9 @@ CREATE TABLE `projects` (
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `open_id` int(11) DEFAULT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `open_id` bigint(30) DEFAULT NULL,
   `token` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -158,14 +158,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `open_id`, `token`, `created_at`, `updated_at`) VALUES
 (1, 'tuan', 'tuanbaros@yahoo.com.vn', '7cd20ef68ec43e9f0bfb44b62d6cf2f2', NULL, NULL, NULL, NULL),
-(5, 'tung', 'tung@gmail.vn', '7cd20ef68ec43e9f0bfb44b62d6cf2f2', NULL, NULL, NULL, NULL),
-(15, 'afsdf', 'tung@gmail.com', '7cd20ef68ec43e9f0bfb44b62d6cf2f2', NULL, NULL, NULL, NULL),
-(21, 'tuan', 'tung@yahoo.com', '7cd20ef68ec43e9f0bfb44b62d6cf2f2', NULL, NULL, NULL, NULL),
-(22, 'afdasf', 'test@gmail.vom', '7cd20ef68ec43e9f0bfb44b62d6cf2f2', NULL, NULL, NULL, NULL),
-(24, 'tuan', 'test@gmail.com', '7cd20ef68ec43e9f0bfb44b62d6cf2f2', NULL, NULL, NULL, NULL),
-(26, 'falfdsj', 'tuan@gmail.vom', '7cd20ef68ec43e9f0bfb44b62d6cf2f2', NULL, NULL, NULL, NULL),
-(51, 'tuan', 'tuan@vn.bn', '7cd20ef68ec43e9f0bfb44b62d6cf2f2', NULL, NULL, NULL, NULL),
-(59, 'fadfsf', 'tuan@ya.ya', '7cd20ef68ec43e9f0bfb44b62d6cf2f2', NULL, NULL, NULL, NULL);
+(61, 'Nguyen Thanh Tuan', 'tuanbaros123@gmail.com', '7cd20ef68ec43e9f0bfb44b62d6cf2f2', NULL, '55c3252ead276fee69f1172dad191bd5vI4ns1s9zUnrj8uZILZ7fxruuKu91E', NULL, NULL),
+(68, 'Tuáº¥n', NULL, NULL, 1531863680177645, 'EAAJlW1eYFUkBAAcM3j0EZCNlZBe3hbXr5UVvBZB3ZBg46BGtWR580jDHgYsFsWUEkjcxCYkmrup8ZAd2uE0M9agMvGLHZAziCiRfD5Daq2FK9gDhcMPSbu76rgPD98IfBCBme6p64Wf1BZC98FqKhm0GbcwDZAImOaUukCgiDbkzMJwCsDhqLxv9iWZBUp', NULL, NULL),
+(71, 'Nguyen Thanh Tuan', NULL, NULL, 9223372036854775807, 'd76cd4fb-506d-4803-b9ab-4844a05c6a05', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -215,7 +210,8 @@ ALTER TABLE `projects`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
+  ADD UNIQUE KEY `users_email_unique` (`email`),
+  ADD UNIQUE KEY `open_id` (`open_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -250,7 +246,7 @@ ALTER TABLE `projects`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

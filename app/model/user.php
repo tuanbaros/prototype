@@ -14,6 +14,10 @@ class User extends Model
 
     private $password;
 
+    private $open_id;
+
+    private $token;
+
     public function __construct()
     {
         parent::__construct();
@@ -56,18 +60,37 @@ class User extends Model
         return $id;
     }
 
+    public function set_open_id($open_id)
+    {
+        $this->open_id = $open_id;
+    }
+
+    public function get_open_id()
+    {
+        return $this->open_id;
+    }
+
+    public function set_token($token)
+    {
+        $this->token = $token;
+    }
+
+    public function get_token()
+    {
+        return $this->token;
+    }
+
     public function login()
     {
         $whereClause = "email='$this->email' and password='$this->password'";
         $result = $this->repository->findByWhere($whereClause);
         $arr = $result->fetchAll();
         if (count($arr) > 0) {
-            $token = $this->get_token($arr[0]['id'], $arr[0]['email']);
+            $token = $this->create_token($arr[0]['id'], $arr[0]['email']);
             $set = "token='{$token}'";
             $id = $arr[0]['id'];
             $whereClause = "id='{$id}'";
             $success = $this->repository->update($set, $whereClause);
-            var_dump($success);
             if ($success > 0) {
                 $arr[0]['token'] = $token;
                 return $arr[0];
@@ -76,7 +99,7 @@ class User extends Model
         return []; 
     }
 
-    private function get_token($id, $email) {
+    private function create_token($id, $email) {
         $random = $this->random_string(30);
         $time = time();
         return md5($id . $email . $time) . $random;
@@ -97,5 +120,26 @@ class User extends Model
         $set = "token=''";
         $whereClause = "token='{$token}'";            
         $success = $this->repository->update($set, $whereClause);
+    }
+
+    public function loginWithOpenId()
+    {
+        $columns = 'name, open_id, token';
+        $values = "'$this->name', '$this->open_id', '$this->token'";
+        $duplicate = 'token';
+        $valuesUpdate = "'$this->token'";
+        $id = $this->repository->insert_duplicate($columns, $values, $duplicate, $valuesUpdate);
+        if ($id < 1) {
+            $set = "token='$this->token'";
+            $whereClause = "open_id='$this->open_id'";
+            $success = $this->repository->update($set, $whereClause);
+            if ($success > 0) {
+                return "success";
+            } else {
+                return "error";
+            }
+        } else {
+            return "success";
+        }
     }
 }
