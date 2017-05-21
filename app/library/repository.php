@@ -26,7 +26,8 @@ class Repository
 
     public function find($id)
     {
-        # code...
+        $sql = "select id from {$this->table} where id={$id}";
+        return $this->db->query($sql);
     }
 
     public function findByWhere($whereClause)
@@ -37,10 +38,8 @@ class Repository
 
     public function insert($columns, $values)
     {
-        $sql = "insert into {$this->table} ({$columns}) values ({$values}) on duplicate key update open_id=open_id";
-        var_dump($sql);
-        // $this->db->query($sql);
-        die();
+        $sql = "insert ignore into {$this->table} ({$columns}) values ({$values})";
+        $this->db->query($sql);
         return $this->db->lastInsertId();
     }
 

@@ -52,6 +52,11 @@ class User extends Model
         $this->id = $id;
     }
 
+    public function get_id()
+    {
+        return $this->id;
+    }
+
     public function register()
     {
         $columns = 'name, email, password';
@@ -130,16 +135,20 @@ class User extends Model
         $valuesUpdate = "'$this->token'";
         $id = $this->repository->insert_duplicate($columns, $values, $duplicate, $valuesUpdate);
         if ($id < 1) {
-            $set = "token='$this->token'";
-            $whereClause = "open_id='$this->open_id'";
-            $success = $this->repository->update($set, $whereClause);
-            if ($success > 0) {
-                return "success";
-            } else {
-                return "error";
-            }
+            return "error";
         } else {
             return "success";
         }
+    }
+
+    public function find()
+    {
+        $whereClause = "open_id='{$this->open_id}' and token='{$this->token}'";
+        $result = $this->repository->findByWhere($whereClause);
+        if ($result->rowCount() > 0) {
+            $this->set_id($result->fetchAll()[0]['id']);
+            return $this->get_id();
+        }
+        return 0;
     }
 }
