@@ -129,4 +129,10 @@ class Project extends Model
             return "success";
         }
     }
+
+    public function getAll($offset)
+    {
+        $result = $this->repository->all('*', $offset);
+        return $result;
+    }
 }

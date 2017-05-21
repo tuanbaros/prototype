@@ -19,14 +19,15 @@ class Repository
         $this->table = $name;
     }
 
-    public function all($column = array('*'))
+    public function all($column, $offset)
     {
-        # code...
+        $sql = "select {$column} from {$this->table} order by id desc limit 10 offset {$offset}";
+        return $this->db->query($sql);
     }
 
     public function find($id)
     {
-        $sql = "select id from {$this->table} where id={$id}";
+        $sql = "select id, name from {$this->table} where id={$id}";
         return $this->db->query($sql);
     }
 

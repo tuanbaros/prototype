@@ -146,9 +146,20 @@ class User extends Model
         $whereClause = "open_id='{$this->open_id}' and token='{$this->token}'";
         $result = $this->repository->findByWhere($whereClause);
         if ($result->rowCount() > 0) {
-            $this->set_id($result->fetchAll()[0]['id']);
+            $data = $result->fetchAll();
+            $this->set_id($data[0]['id']);
             return $this->get_id();
         }
         return 0;
+    }
+
+    public function findName($id)
+    {
+        $result = $this->repository->find($id);
+        if ($result->rowCount() > 0) {
+            $data = $result->fetchAll();
+            return $data[0]['name'];
+        }
+        return '';
     }
 }

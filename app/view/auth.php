@@ -4,7 +4,7 @@
     <?php require_once 'app/view/partial/meta.php'; ?>
     <title>Auth</title>
     <?php require_once 'app/view/partial/css.php'; ?>
-    <link rel="stylesheet" href="res/css/auth.css">
+    <link rel="stylesheet" href="<?php echo DOMAIN; ?>res/css/auth.css">
     <?php if (isset($_SESSION['error'])) {
         echo '<link rel="stylesheet" href="res/css/register.css">';
     } ?>
@@ -45,12 +45,12 @@
         </div>
     </div>
     <?php require_once 'app/view/partial/js.php'; ?>
-    <script src="res/js/auth.js"></script>
+    <script src="<?php echo DOMAIN; ?>res/js/auth.js"></script>
     <?php if (isset($_SESSION['error'])) {
-        echo '<script src="res/js/register.js"></script>';
+        echo '<script src="<?php echo DOMAIN; ?>res/js/register.js"></script>';
     } ?>
     <?php if (isset($_SESSION['login'])) {
-        echo '<script src="res/js/login.js"></script>';
+        echo '<script src="<?php echo DOMAIN; ?>res/js/login.js"></script>';
     } ?>
     <?php session_destroy(); ?>
 </body>

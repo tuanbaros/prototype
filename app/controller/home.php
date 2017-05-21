@@ -13,6 +13,6 @@ class Home extends Controller
             $user->set_name($_SESSION['name']);
             $user->set_email($_SESSION['email']);
         }
-        $this->view('home', ['user' => $user]);
+        $this->view('home', array('user' => $user));
     }
 }
