@@ -4,14 +4,20 @@
 */
 class Route
 { 
-    protected $controller = 'home';
+    protected $controller;
 
-    protected $method = 'index';
+    protected $method;
 
-    protected $params = [];
+    protected $params;
 
     public function __construct()
     {
+        $this->controller = 'home';
+
+        $this->method = 'index';
+
+        $this->params = array();
+
         $url = $this->parse_url();
 
         if ($url === null) {
@@ -38,9 +44,9 @@ class Route
             }
         }
 
-        $this->params = $url ? array_values($url) : [];
+        $this->params = $url ? array_values($url) : array();
 
-        call_user_func_array([$this->controller, $this->method], $this->params);
+        call_user_func_array(array($this->controller, $this->method), $this->params);
     }
 
     private function parse_url()

@@ -75,4 +75,35 @@ class Api extends Controller
             echo "error";
         }
     }
+
+    public function projects($offset)
+    {
+        $result = $this->model('project')->getAll($offset);
+        $array = array();
+        if ($result->rowCount() > 0) {
+            $data = $result->fetchAll();
+            for ($i=0; $i < $result->rowCount(); $i++) { 
+                $project = new stdClass;
+                $r = $data[$i];
+                $project->title = $r['title'];
+                $project->description = $r['description'];
+                $project->w = $r['width'];
+                $project->h = $r['height'];
+                $project->orientation = $r['orientation'];
+                $project->poster = $r['poster'];
+                $project->mEntryId = $r['entry_id'];
+                $project->author = $this->model('user')->findName($r['user_id']);
+                $array[$i] = $project; 
+            }
+        }
+        echo json_encode($array);
+    }
+
+    private function showResponse($resonse)
+    {
+        echo "<pre>";
+        print_r($resonse);
+        echo "</pre>";
+        // die();
+    }
 }
