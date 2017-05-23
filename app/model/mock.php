@@ -105,4 +105,12 @@ class Mock extends Model
             return "success";
         }
     }
+
+    public function getAll($entry_id)
+    {
+        $whereClause = "project_id='$entry_id'";
+        $result = $this->repository->findByWhere($whereClause);
+        $arr = $result->fetchAll();
+        return $arr;
+    }
 }

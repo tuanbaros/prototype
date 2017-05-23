@@ -82,7 +82,7 @@ class Api extends Controller
         $array = array();
         if ($result->rowCount() > 0) {
             $data = $result->fetchAll();
-            for ($i=0; $i < $result->rowCount(); $i++) { 
+            for ($i = 0; $i < $result->rowCount(); $i++) { 
                 $project = new stdClass;
                 $r = $data[$i];
                 $project->title = $r['title'];
@@ -104,6 +104,48 @@ class Api extends Controller
         echo "<pre>";
         print_r($resonse);
         echo "</pre>";
-        // die();
+        die();
+    }
+
+    public function download()
+    {
+        if (isset($_POST['project_entry_id'])) {
+            $entry_id = $_POST['project_entry_id'];
+            $result = $this->model('mock')->getAll($entry_id);
+            $mocks = array();
+            if (count($result) > 0) {
+                for ($i = 0; $i < count($result); $i++) { 
+                    $mock = new stdClass;
+                    $r = $result[$i];
+                    $elements = array();
+                    $e_result = $this->model('element')->getAll($r['entry_id']);
+                    if (count($e_result) > 0) {
+                        for ($j = 0; $j < count($e_result); $j++) { 
+                            $element = new stdClass;
+                            $e_r = $e_result[$j];
+                            $element->gesture = $e_r['gesture'];
+                            $element->link_to = $e_r['link_to'];
+                            $element->transition = $e_r['transition'];
+                            $element->x = $e_r['x'];
+                            $element->y = $e_r['y'];
+                            $element->w = $e_r['width'];
+                            $element->h = $e_r['height'];
+                            $elements[$j] = $element;
+                        }
+                    }
+                    $mock->elements = $elements;  
+                    $mock->client_id = $r['entry_id'];
+                    $mock->image = $r['image'];
+                    $mock->notes = $r['note'];
+                    $mock->title = $r['title'];
+                    $mock->mPosition = $r['position'];
+                    $mocks[$i] = $mock;
+                }
+            }
+
+            echo json_encode($mocks);
+        } else {
+            echo json_encode(array());
+        }
     }
 }
