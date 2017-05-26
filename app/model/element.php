@@ -141,4 +141,12 @@ class Element extends Model
             return "success";
         }
     }
+
+    public function getAll($entry_id)
+    {
+        $whereClause = "mock_id='$entry_id'";
+        $result = $this->repository->findByWhere($whereClause);
+        $arr = $result->fetchAll();
+        return $arr;
+    }
 }
