@@ -148,4 +148,66 @@ class Api extends Controller
             echo json_encode(array());
         }
     }
+
+    public function comments($project_entry_id, $offset)
+    {
+        $comment = $this->model('comment');
+        $comment->set_project_id($project_entry_id);
+        $result = $comment->getAll($offset);
+        $array = array();
+        if ($result->rowCount() > 0) {
+            $data = $result->fetchAll();
+            for ($i = 0; $i < $result->rowCount(); $i++) { 
+                $c = new stdClass;
+                $r = $data[$i];
+                $c->id = $r['id'];
+                $c->content = $r['content'];
+                $c->user = $this->model('user')->findName($r['user_id']);
+                $array[$i] = $c;
+            }
+        }
+        echo json_encode($array);
+    }
+
+    public function comment()
+    {
+        $openid = $_POST['open_id'];
+        $token = $_POST['token'];
+        $user = $this->model('user');
+        $user->set_open_id($openid);
+        $user->set_token($token);
+        $id = $user->find();
+        if ($id > 0) {
+            $comment = json_decode($_POST['comment']);
+            $c = $this->model('comment');
+            $c->set_user_id($id);
+            $c->set_content($comment->content);
+            $c->set_project_id($comment->project_id);
+            $result1 = $c->store();
+            if ($result1 == "error") {
+                echo json_encode(array());
+            } else {
+                $last_id = 0;
+                if (isset($_POST['last_id'])) {
+                    $last_id = $_POST['last_id'];
+                    $result = $c->getNewComment($last_id);
+                    $array = array();
+                    if ($result->rowCount() > 0) {
+                        $data = $result->fetchAll();
+                        for ($i = 0; $i < $result->rowCount(); $i++) { 
+                            $c1 = new stdClass;
+                            $r = $data[$i];
+                            $c1->id = $r['id'];
+                            $c1->content = $r['content'];
+                            $c1->user = $this->model('user')->findName($r['user_id']);
+                            $array[$i] = $c1;
+                        }
+                    }
+                    echo json_encode($array);
+                }
+            }
+        } else {
+            echo json_encode(array());
+        }
+    }
 }
