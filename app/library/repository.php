@@ -37,6 +37,12 @@ class Repository
         return $this->db->query($sql);
     }
 
+    public function findLimit($whereClause, $offset)
+    {
+        $sql = "select * from {$this->table} where {$whereClause} order by id desc limit 10 offset {$offset}";
+        return $this->db->query($sql);
+    }
+
     public function insert($columns, $values)
     {
         $sql = "insert ignore into {$this->table} ({$columns}) values ({$values})";
