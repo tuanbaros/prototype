@@ -108,7 +108,7 @@ class Mock extends Model
 
     public function getAll($entry_id)
     {
-        $whereClause = "project_id='$entry_id'";
+        $whereClause = "project_id='$entry_id' order by position asc";
         $result = $this->repository->findByWhere($whereClause);
         $arr = $result->fetchAll();
         return $arr;
