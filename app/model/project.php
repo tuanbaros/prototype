@@ -135,4 +135,15 @@ class Project extends Model
         $result = $this->repository->all('*', $offset);
         return $result;
     }
+
+    public function find($entry_id)
+    {
+        $whereClause = "entry_id='$entry_id'";
+        $result = $this->repository->findByWhere($whereClause);
+        if ($result->rowCount() > 0) {
+            $data = $result->fetchAll();
+            return $data[0];
+        }
+        return 'error';
+    }
 }
