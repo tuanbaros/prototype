@@ -11,7 +11,12 @@ class Demo extends Controller
         if (isset($entry_id)) {
         	$project = $this->model('project');
         	$p = $project->find($entry_id);
-        	$p['author'] = $this->model('user')->findName($p['user_id']);
+            $user = $this->model('user')->findName($p['user_id']);
+            if ($user == null) {
+                $p['author'] = '';
+            } else {
+                $p['author'] = $user['name'];
+            }
         	if ($p == 'error') {
         		echo $p;
         		return;
