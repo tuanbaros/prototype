@@ -76,4 +76,10 @@ class Comment extends Model
         $result = $this->repository->findLimit($whereClause, $offset);
         return $result;
     }
+
+    public function count($project_id)
+    {
+        $whereClause = "project_id='$project_id'";
+        return $this->repository->count($whereClause);
+    }
 }
