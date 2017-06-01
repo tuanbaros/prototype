@@ -93,6 +93,7 @@ class Api extends Controller
                 $project->poster = $r['poster'];
                 $project->mEntryId = $r['entry_id'];
                 $project->author = $this->model('user')->findName($r['user_id']);
+                $project->num_comment = $this->model('comment')->count($project->mEntryId);
                 $array[$i] = $project; 
             }
         }
