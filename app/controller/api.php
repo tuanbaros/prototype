@@ -92,7 +92,14 @@ class Api extends Controller
                 $project->orientation = $r['orientation'];
                 $project->poster = $r['poster'];
                 $project->mEntryId = $r['entry_id'];
-                $project->author = $this->model('user')->findName($r['user_id']);
+                $user = $this->model('user')->findName($r['user_id']);
+                if ($user == null) {
+                    $project->author = '';
+                    $project->author_open_id = '';
+                } else {
+                    $project->author = $user['name'];
+                    $project->author_open_id = $user['open_id'];
+                }
                 $project->num_comment = $this->model('comment')->count($project->mEntryId);
                 $array[$i] = $project; 
             }
@@ -163,7 +170,14 @@ class Api extends Controller
                 $r = $data[$i];
                 $c->id = $r['id'];
                 $c->content = $r['content'];
-                $c->user = $this->model('user')->findName($r['user_id']);
+                $user = $this->model('user')->findName($r['user_id']);
+                if ($user == null) {
+                    $c->user = '';
+                    $c->user_open_id = '';
+                } else {
+                    $c->user = $user['name'];
+                    $c->user_open_id = $user['open_id'];
+                }
                 $array[$i] = $c;
             }
         }
@@ -200,7 +214,14 @@ class Api extends Controller
                             $r = $data[$i];
                             $c1->id = $r['id'];
                             $c1->content = $r['content'];
-                            $c1->user = $this->model('user')->findName($r['user_id']);
+                            $user = $this->model('user')->findName($r['user_id']);
+                            if ($user == null) {
+                                $c1->user = '';
+                                $c1->user_open_id = '';
+                            } else {
+                                $c1->user = $user['name'];
+                                $c1->user_open_id = $user['open_id'];
+                            }
                             $array[$i] = $c1;
                         }
                     }

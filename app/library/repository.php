@@ -27,7 +27,7 @@ class Repository
 
     public function find($id)
     {
-        $sql = "select id, name from {$this->table} where id={$id}";
+        $sql = "select id, name, open_id from {$this->table} where id={$id}";
         return $this->db->query($sql);
     }
 

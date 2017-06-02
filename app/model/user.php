@@ -158,8 +158,8 @@ class User extends Model
         $result = $this->repository->find($id);
         if ($result->rowCount() > 0) {
             $data = $result->fetchAll();
-            return $data[0]['name'];
+            return $data[0];
         }
-        return '';
+        return null;
     }
 }
