@@ -101,7 +101,7 @@ class User extends Model
                 return $arr[0];
             }
         }
-        return []; 
+        return array(); 
     }
 
     private function create_token($id, $email) {
