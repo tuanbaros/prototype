@@ -245,11 +245,9 @@
                     $(selector).css("border", "1px solid #ccc");
                     $(selector).hide(); 
                     count++;
-                    if (count == mocks.length - 1) {
+                    if (count == mocks.length) {
                         $('#' + mocks[0].client_id).show(); 
                         currentId = mocks[0].client_id;
-                        // alert($('#' + currentId).css('margin-left'));
-                        // alert($('#' + currentId).css('margin-right'));
                         $('#bottom').css('width', realWidth);
                         $('#page').css('text-align', 'center');
                     }
